@@ -86,7 +86,7 @@ module.exports.loop = function () {
         
         if(false){
 
-        } else if(basicWorkers.length < 4) { //false && harvesters.length < room.find(FIND_SOURCES).length) {
+        } else if(basicWorkers.length < 3) { //false && harvesters.length < room.find(FIND_SOURCES).length) {
             console.log(spawn + " " + "aucun creeps");
             var newName = 'worker' + Game.time;
             spawn.spawnCreep( [WORK,WORK, MOVE, CARRY], newName, { memory: { role: 'basicWorker'} });

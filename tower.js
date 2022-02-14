@@ -5,7 +5,7 @@ module.exports = {
         var hostiles = room.find(FIND_HOSTILE_CREEPS);
         var towers = room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
 
-        //if there are hostiles - attakc them    
+        //if there are hostiles - attakc them
         if(hostiles.length > 0) {
             var username = hostiles[0].owner.username;
             Game.notify(`User ${username} spotted in room ${room}`);
@@ -21,7 +21,7 @@ module.exports = {
                 var creep = Game.creeps[name];
                 if (creep.hits < creep.hitsMax) {
                     towers.forEach(tower => tower.heal(creep));
-                    console.log("Tower is healing Creeps.");
+                    // console.log("Tower is healing Creeps.");
                 }
             }        
         
@@ -35,18 +35,20 @@ module.exports = {
     	            if(closestDamagedStructure) {
     	 	            tower.repair(closestDamagedStructure);
     	 	         //   console.log("The tower is repairing buildings.");
-                    } else if(tower.room.storage.store[RESOURCE_ENERGY] > tower.room.storage.storeCapacity / 2000){
-                        var damagedStructures = tower.room.find(FIND_STRUCTURES, {filter: (s) => s.hits < 1000000 && (s.structureType == STRUCTURE_WALL | s.structureType == STRUCTURE_RAMPART)});
-                        var damagedStructure = damagedStructures[0];
-                        for(var i in damagedStructures) {
-                            var structure = damagedStructures[i];
-                            if(structure.hits < damagedStructure.hits) {
-                                damagedStructure = structure;
-                                // console.log("min " + damagedStructure);
+                    } else if(room.storage){
+                        if(tower.room.storage.store[RESOURCE_ENERGY] > 10000) {
+                            var damagedStructures = tower.room.find(FIND_STRUCTURES, {filter: (s) => s.hits < 1200000 && (s.structureType == STRUCTURE_WALL | s.structureType == STRUCTURE_RAMPART)});
+                            var damagedStructure = damagedStructures[0];
+                            for(var i in damagedStructures) {
+                                var structure = damagedStructures[i];
+                                if(structure.hits < damagedStructure.hits) {
+                                    damagedStructure = structure;
+                                    // console.log("min " + damagedStructure);
+                                }
                             }
-                        }
-                        if(damagedStructure) {
-    	 	                tower.repair(damagedStructure);
+                            if(damagedStructure) {
+        	 	                tower.repair(damagedStructure);
+                            }
                         }
                     }
                 }
